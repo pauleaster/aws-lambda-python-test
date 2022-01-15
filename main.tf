@@ -2,10 +2,10 @@ provider "aws" {
   region = "ap-southeast-2"
 }
 
-data "archive_file" "bootstrap-zip" {
+data "archive_file" "lambda-zip" {
   type        = "zip"
-  source_dir  = "./target/x86_64-unknown-linux-musl/release/"
-  output_path = "bootstrap.zip"
+  source_dir  = "src"
+  output_path = "lambda.zip"
 }
 
 resource "aws_iam_role" "lambda-iam" {
@@ -29,12 +29,12 @@ resource "aws_iam_role" "lambda-iam" {
 
 
 resource "aws_lambda_function" "lambda" {
-  filename         = "bootstrap.zip"
+  filename         = "lambda.zip"
   function_name    = "aws-lamda-test-terrform"
   role             = aws_iam_role.lambda-iam.arn
   handler          = "lambda.lambda_handler"
-  source_code_hash = data.archive_file.bootstrap-zip.output_base64sha256
-  runtime          = "provided.al2"
+  source_code_hash = data.archive_file.lambda-zip.output_base64sha256
+  runtime          = "python3.8"
 }
 
 resource "aws_apigatewayv2_api" "lambda-api" {
