@@ -3,6 +3,7 @@ import json
 
 def lambda_handler(event, context):
     return {
-        "status_code": 200,
-        "body" : json.dumps(event["headers"]["X-forwarded-for"])
+        "statusCode": 200,
+        "body" : json.dumps(event["headers"]["X-Forwarded-For"])
     }
+

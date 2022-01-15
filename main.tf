@@ -4,12 +4,12 @@ provider "aws" {
 
 data "archive_file" "lambda-zip" {
   type        = "zip"
-  source_dir  = "src"
+  source_file  = "src/main.py"
   output_path = "lambda.zip"
 }
 
-resource "aws_iam_role" "lambda-iam" {
-  name = "lambda-iam"
+resource "aws_iam_role" "lambda-py-iam" {
+  name = "lambda-py-iam"
   assume_role_policy = jsonencode(
     {
       "Version" : "2012-10-17",
@@ -30,9 +30,9 @@ resource "aws_iam_role" "lambda-iam" {
 
 resource "aws_lambda_function" "lambda" {
   filename         = "lambda.zip"
-  function_name    = "aws-lamda-test-terrform"
-  role             = aws_iam_role.lambda-iam.arn
-  handler          = "lambda.lambda_handler"
+  function_name    = "aws-lambda-python-test-terrform"
+  role             = aws_iam_role.lambda-py-iam.arn
+  handler          = "main.lambda_handler"
   source_code_hash = data.archive_file.lambda-zip.output_base64sha256
   runtime          = "python3.8"
 }

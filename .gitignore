@@ -4,3 +4,4 @@ bootstrap
 .terraform*
 terraform.*
 todo.txt
+*.zip
