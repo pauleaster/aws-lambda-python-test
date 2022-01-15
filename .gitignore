@@ -5,3 +5,4 @@ bootstrap
 terraform.*
 todo.txt
 *.zip
+*/temp.json

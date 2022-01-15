@@ -30,7 +30,7 @@ resource "aws_iam_role" "lambda-py-iam" {
 
 resource "aws_lambda_function" "lambda" {
   filename         = "lambda.zip"
-  function_name    = "aws-lambda-python-test-terrform"
+  function_name    = "aws-lambda-python-test-terraform"
   role             = aws_iam_role.lambda-py-iam.arn
   handler          = "main.lambda_handler"
   source_code_hash = data.archive_file.lambda-zip.output_base64sha256
@@ -58,7 +58,7 @@ resource "aws_apigatewayv2_integration" "lambda-integration" {
 
 resource "aws_apigatewayv2_route" "lambda-route" {
   api_id    = aws_apigatewayv2_api.lambda-api.id
-  route_key = "GET /{proxy+}"
+  route_key = "ANY /{event+}"
   target    = "integrations/${aws_apigatewayv2_integration.lambda-integration.id}"
 }
 
