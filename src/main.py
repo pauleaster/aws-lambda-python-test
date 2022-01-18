@@ -3,7 +3,7 @@ import json
 
 
 def lambda_handler(event, context):
-    event_json = json.dumps(event)
+    event_json = json.dumps(event["queryStringParameters"])
     # context_json = json.dumps(context)
     # data = {'event': event_json, 'context': context_json}
     # data_json = json.dumps(event_json)
