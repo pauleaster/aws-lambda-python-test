@@ -58,7 +58,7 @@ resource "aws_apigatewayv2_integration" "lambda-integration" {
 
 resource "aws_apigatewayv2_route" "lambda-route" {
   api_id    = aws_apigatewayv2_api.lambda-api.id
-  route_key = "ANY /{event+}"
+  route_key = "GET /{proxy+}"
   target    = "integrations/${aws_apigatewayv2_integration.lambda-integration.id}"
 }
 
